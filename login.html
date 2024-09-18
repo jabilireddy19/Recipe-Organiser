@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Login</title>
+    <style>
+                h1, p, label{
+    color: antiquewhite;
+} input[type="email"], input[type="password"]{
+    background-color: beige;
+}
+.parallax {
+  /* The image used */
+  /*background-image: url("bg2.jpg");*/
+
+  /* Set a specific height */
+  min-height: 500px; 
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+    </style>
+</head>
+<body style="background-image: url('bg3.jfif');background-size: cover;">
+    <script>
+        function on_login(){
+           // document.form1.submit_btn.disabled = true;
+            let uname = document.form1.exampleInputEmail1.value;
+            let passwd = document.form1.exampleInputPassword1.value;
+            console.log(uname + " " + passwd);
+            let uparams = "exampleInputEmail1=" + uname + "&exampleInputPassword1=" + passwd;
+
+            let logged_in = 0;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("response:" + this.responseText);
+                    logged_in = (this.responseText);
+                    if (logged_in == 1){
+                window.location.replace("recipes.html");
+            } else{
+                alert("Incorrect Credentials");
+                //document.form1.submit_btn.disabled = false;
+            }
+                }
+            };
+            xhttp.open("POST", "check_login.php", true);
+            xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhttp.send(uparams);
+
+        }
+    </script>
+
+    <div class="jumbotron" style="background: none">
+        <h1 class="display-4">LOGIN</h1>
+        <hr>
+        <form method="post" name="form1">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input style="width: 60%;" type="email" class="form-control" name="exampleInputEmail1" aria-describedby="emailHelp" required>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input style="width: 60%;" type="password" class="form-control" name="exampleInputPassword1" required>
+        </div>
+            <button name="submit_btn" onclick="on_login()" class="btn btn-primary">login</button><br><hr>
+    
+        </form>
+    
+        <div class="parallax"></div>
+    </div>
+</body>
+</html>
